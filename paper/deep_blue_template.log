@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=latex 2011.7.3)  16 FEB 2015 15:55
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=latex 2011.7.3)  16 FEB 2015 16:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**nips2014.tex
-(./nips2014.tex
+**deep_blue_template.tex
+(./deep_blue_template.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
@@ -202,30 +202,31 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip43
 ))
-(./nips2014.aux)
-\openout1 = `nips2014.aux'.
+No file deep_blue_template.aux.
+\openout1 = `deep_blue_template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 47.
- (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 85.
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 47.
- (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
+Package hyperref Info: Link coloring OFF on input line 85.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
 (/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -233,117 +234,60 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count102
 )
-LaTeX Info: Redefining \ref on input line 47.
-LaTeX Info: Redefining \pageref on input line 47.
-LaTeX Info: Redefining \nameref on input line 47.
-
-(./nips2014.out) (./nips2014.out)
+LaTeX Info: Redefining \ref on input line 85.
+LaTeX Info: Redefining \pageref on input line 85.
+LaTeX Info: Redefining \nameref on input line 85.
 \@outlinefile=\write3
-\openout3 = `nips2014.out'.
+\openout3 = `deep_blue_template.out'.
+
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 88.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 51.
+(Font)              <7> on input line 88.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 51.
+(Font)              <5> on input line 88.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 51.
-
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 88.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 88.
 (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 117.
  [1
 
-] [2]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 241.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 241.
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 117.
 
-[3]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 313.
-
- (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/omsptm.fd
-File: omsptm.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 313.
-
-Underfull \hbox (badness 10000) in paragraph at lines 318--321
-[]\OT1/ptm/m/n/10 The IEEE has rec-om-men-da-tions for gen-er-at-ing PDF files
- []
+(./deep_blue_template.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 117.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 117.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 318--321
-\OT1/ptm/m/n/10 whose fonts are also ac-cept-able for NIPS. Please see
- []
+Package rerunfilecheck Warning: File `deep_blue_template.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
+Package rerunfilecheck Info: Checksums for `deep_blue_template.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  274D394AC5694CCEA4EAB21C95EE705D;243.
 
-Overfull \hbox (17.51501pt too wide) in paragraph at lines 318--321
-[][][][] 
- []
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 361--363
-[]\OT1/ptm/m/n/10 Install the Mi-crosoft Save as PDF Of-fice 2007 Add-in from
- []
-
-
-Overfull \hbox (308.51505pt too wide) in paragraph at lines 361--363
-[][][][] 
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 372--376
-[]\OT1/ptm/m/n/10 To cre-ate a new printer on your com-puter, in-stall the
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 372--376
-\OT1/ptm/m/n/10 AdobePS printer driver and the Adobe Dis-tiller PPD file from
- []
-
-
-Overfull \hbox (12.51505pt too wide) in paragraph at lines 372--376
-[][][][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 409--411
-\OT1/ptm/m/n/10 for .pdf graph-ics. See sec-tion 4.4 in the graph-ics bun-dle d
-oc-u-men-ta-tion
- []
-
-
-Overfull \hbox (53.67493pt too wide) in paragraph at lines 409--411
-\OT1/ptm/m/n/10 ([][][][]) 
- []
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 429.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 444.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 447.
-[5] [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 447.
- (./nips2014.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 447.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 447.
-Package rerunfilecheck Info: File `nips2014.out' has not changed.
-(rerunfilecheck)             Checksum: B3DC915BBAB9AF34C3C9FFED287DA8D4;976.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 447.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 117.
  ) 
 Here is how much of TeX's memory you used:
- 4929 strings out of 493634
- 72562 string characters out of 3143401
- 162303 words of memory out of 3000000
- 8210 multiletter control sequences out of 15000+200000
- 13623 words of font info for 36 fonts, out of 3000000 for 9000
+ 4862 strings out of 493634
+ 71714 string characters out of 3143401
+ 155303 words of memory out of 3000000
+ 8161 multiletter control sequences out of 15000+200000
+ 7992 words of font info for 23 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 37i,9n,39p,207b,430s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 37i,8n,39p,217b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on nips2014.dvi (6 pages, 31852 bytes).
+Output written on deep_blue_template.dvi (1 page, 4308 bytes).

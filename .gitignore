@@ -4,6 +4,8 @@ data/*
 *.log
 *.t7
 *.net
+*checkpoint.ipynb
+
 
 ## LaTex auxiliary files:
 *.aux

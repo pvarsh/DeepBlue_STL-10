@@ -70,6 +70,7 @@ unlabeled = 'unlabeled_X.bin'
 
 ----------------------------------------------------------------------
 print '==> loading dataset'
+print("Path: ", path .. train_X)
 
 train_fd = torch.DiskFile(path .. train_X, 'r', true)
 train_fd:binary():littleEndianEncoding()

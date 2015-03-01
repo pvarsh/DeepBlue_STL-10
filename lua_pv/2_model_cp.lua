@@ -4,34 +4,41 @@
 ----------
 
 ----------
--- Will start working to get this into the pipeline after lunch today (Sunday)
--- so if you want to make changes, please do in separate branch or 
--- copy file to separate folder
----------- Peter
+-- TODO: CUDA
+----------
 
 require 'nn';
 require 'image';
 require 'optim';
 require 'xlua';
 
+
+----------------------------------------------------------------------
+print '==> define parameters'
+
+nfeats = 3        -- number of channels in input images
+nstates = 23      -- number of convolution kernels
+filtsize = 7      -- width and height of convolution kernels
+stepsize = 2      -- stride size for convolution and pooling
+padding = 2       -- for padding
+noutputs = 10     -- number of output classes
+pooling = 2       -- width and height of pooling 
+drop_prob = 0.5   -- dropout probability (regularization)
+
+----------------------------------------------------------------------
+-- Christian Puhrsch model architecture:
+-- Conv layer (23 channels, 7x7 filters, stride 2, padding 2, RELU activation)
+-- Max pooling (3x3 patch, stride 2)
+-- Dropout
+-- Full connected layer (50 units)
+-- Softmax layer
+
 model = nn.Sequential()
-
-nfeats = 3
-nstates = 23
-filtsize = 7
-stepsize = 2
-padding = 2
-noutputs = 10
-
-pooling = 2
-drop_probability = 0.5
-
--- nInputPlane, nOutputPlane, kW, kH, dW, dH, padding
 model:add(nn.SpatialZeroPadding(padding, padding, padding, padding))
 model:add(nn.SpatialConvolution(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
 model:add(nn.ReLU())
 model:add(nn.SpatialMaxPooling(pooling, pooling, stepsize, stepsize))
-model:add(nn.Dropout(drop_probability))
+model:add(nn.Dropout(drop_prob))
 model:add(nn.Reshape(23*23*23))
 model:add(nn.Linear(23*23*23, 50))
 model:add(nn.ReLU())

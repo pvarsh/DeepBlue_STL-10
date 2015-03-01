@@ -123,7 +123,12 @@ if opt.unlabeled == true then
    }
 end
 
--- ----------------------------------------------------------------------
+
+-- Size variables are used in train and test functions
+trsize = trainData:size()
+tesize = testData:size()
+
+----------------------------------------------------------------------
 print '==> preprocessing data'
 
 -- Convert to Float Tensor
@@ -185,6 +190,22 @@ for c in ipairs(channels) do
    end
 end
 
+----------------------------------------------------------------------
+print '==> zero padding (2px)'
+
+zeroPadder = nn.SpatialZeroPadding(2,2,2,2)
+trainData['padded'] = torch.FloatTensor(trainData:size(), 3, 100, 100)
+testData['padded'] = torch.FloatTensor(testData:size(), 3, 100, 100)
+
+for i = 1,trainData:size() do
+   trainData.padded[i] = zeroPadder:forward(trainData.data[i])
+end
+for i = 1,testData:size() do
+   testData.padded[i] = zeroPadder:forward(testData.data[i])
+end
+
+trainData.data = trainData.padded
+testData.data  = testData.padded
 
 ----------------------------------------------------------------------
 print '==> verify statistics'

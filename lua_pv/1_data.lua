@@ -31,7 +31,7 @@ if not opt then
    cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
    cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
    cmd:option('-visualize', true, 'visualize input data and weights during training')
-   cmd:option('-yuv', false, 'convert images from RGB to YUV')
+   cmd:option('-yuv', true, 'convert images from RGB to YUV')
    cmd:text()
    opt = cmd:parse(arg or {})
 end
@@ -148,6 +148,7 @@ if opt.yuv == true then
 
 end
 
+-- Normalization
 
 
 

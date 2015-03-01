@@ -43,4 +43,11 @@ torch.manualSeed(opt.seed)
 dofile '1_data.lua'
 dofile '2_model_cp.lua'
 dofile '3_loss.lua'
--- dofile '4_train.lua'
+dofile '4_train.lua'
+
+----------------------------------------------------------------------
+print '==> training'
+
+while true do
+   train()
+end

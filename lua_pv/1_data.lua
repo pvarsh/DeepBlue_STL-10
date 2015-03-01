@@ -101,10 +101,57 @@ if opt.unlabeled == true then
    unlabeled_fd:readByte(unlabeled_data:storage())
 end
 
+-- Put data in Lua tables
+
+trainData = {
+   data = train_data,
+   labels = train_labels,
+   size = function() return trainData.data:size()[1] end
+}
+
+testData = {
+   data = test_data,
+   labels = test_labels,
+   size = function() return testData.data:size()[1] end
+}
+
+if opt.unlabeled == true then
+   unlabeledData = {
+      data = unlabeled_data,
+      size = function() return unlabeledData.data:size()[1] end
+   }
+end
+
 -- ----------------------------------------------------------------------
 print '==> preprocessing data'
 
+-- Convert to Float Tensor
+trainData.data = trainData.data:float()
+testData.data = testData.data:float()
+if opt.unlabeled == true then
+   unlabeledData.data = unlabeledData.data:float()
+end
 
+-- Convert from RGB to YUV
+if opt.yuv == true then
+   for i=1,trainData:size() do
+      trainData.data[i] = image.rgb2yuv(trainData.data[i])
+   end
+
+   for i=1,testData:size() do
+      testData.data[i] = image.rgb2yuv(testData.data[i])
+   end
+
+-- TODO: Unlabeled conversion not implemented
+--       since only a subset of unlabeled data might be used
+--       should only preprocess the subset to save resources
+
+end
+
+
+
+
+-- for i in 
 
 -- Preprocessing requires a floating point representation (the original
 -- data is stored on bytes). Types can be easily converted in Torch, 

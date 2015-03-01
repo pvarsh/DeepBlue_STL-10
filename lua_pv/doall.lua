@@ -18,6 +18,7 @@ cmd:option('-weightDecay', 0, 'weight decay (SGD only)')
 cmd:option('-momentum', 0, 'momentum (SGD only)')
 cmd:option('-type', 'double', 'type: double | float | cuda')
 cmd:option('-seed', 1, 'fixed input seed for repeatable experiments')
+cmd:option('-threads', 2, 'number of threads')
 -- Options defined by team
 cmd:option('-runlocal', false, 'indicate true if running on local machine')
 cmd:option('-yuv', true, 'convert images from RGB to YUV')

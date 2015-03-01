@@ -148,7 +148,41 @@ if opt.yuv == true then
 
 end
 
--- Normalization
+-- Normalization (assuming YUV image)
+
+channels = {'y', 'u', 'v'}
+mean = {}
+std = {}
+------ Normalize each channel globally.
+-- Normalize training data
+for i, channel in ipairs(channels) do
+   mean[i] = trainData.data[{ {},i,{},{} }]:mean()
+   std[i]  = trainData.data[{ {},i,{},{} }]:std()
+   trainData.data[{ {},i,{},{} }]:add(-mean[i])
+   trainData.data[{ {},i,{},{} }]:div(std[i])
+end
+-- Normalize test data using training data mean and std
+for i,channel in ipairs(channels) do
+   testData.data[{ {},i,{},{} }]:add(-mean[i])
+   testData.data[{ {},i,{},{} }]:div(std[i])
+end
+
+------ Normalize each channel locally.
+-- Define normalization neighborhood and operation
+neighborhood = image.gaussian1D(5)
+normalization = nn.SpatialContrastiveNormalization(1, neighborhood, 1):float()
+-- Normalize training data
+for c in ipairs(channels) do
+   for i = 1,trainData:size() do
+      trainData.data[{ i,{c},{},{} }] = normalization:forward(trainData.data[{ i,{c},{},{} }])
+   end
+end
+-- Normalize test data
+for c in ipairs(channels) do
+   for i = 1,testData:size() do
+      testData.data[{ i,{c},{},{} }] = normalization:forward(testData.data[{ i,{c},{},{} }])
+   end
+end
 
 
 

@@ -205,16 +205,16 @@ for i,channel in ipairs(channels) do
    print('test data, '..channel..'-channel, standard deviation: ' .. testStd)
 end
 
--- ----------------------------------------------------------------------
--- -- print '==> visualizing data'
--- -- 
--- -- -- Visualization is quite easy, using gfx.image().
--- -- 
--- -- if opt.visualize then
--- --    first256Samples_y = trainData.data[{ {1,256},1 }]
--- --    first256Samples_u = trainData.data[{ {1,256},2 }]
--- --    first256Samples_v = trainData.data[{ {1,256},3 }]
--- --    gfx.image(first256Samples_y, {legend='Y'})
--- --    gfx.image(first256Samples_u, {legend='U'})
--- --    gfx.image(first256Samples_v, {legend='V'})
--- -- end
+--------------------------------------------------------------------
+-- print '==> visualizing data'
+
+-- -- Visualization is quite easy, using gfx.image().
+
+-- if opt.visualize then
+--    first256Samples_y = trainData.data[{ {1,256},1 }]
+--    first256Samples_u = trainData.data[{ {1,256},2 }]
+--    first256Samples_v = trainData.data[{ {1,256},3 }]
+--    gfx.image(first256Samples_y, {legend='Y'})
+--    gfx.image(first256Samples_u, {legend='U'})
+--    gfx.image(first256Samples_v, {legend='V'})
+-- end

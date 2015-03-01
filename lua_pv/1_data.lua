@@ -31,6 +31,7 @@ if not opt then
    cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
    cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
    cmd:option('-visualize', true, 'visualize input data and weights during training')
+   cmd:option('-yuv', false, 'convert images from RGB to YUV')
    cmd:text()
    opt = cmd:parse(arg or {})
 end
@@ -92,7 +93,6 @@ test_data = test_data:transpose(4,3)
 test_labels = torch.ByteTensor(8000)
 test_label_fd:readByte(test_labels:storage())
 
--- Haven't tested unlabeled loader
 if opt.unlabeled == true then
    unlabeled_fd = torch.DiskFile(path .. unlabeled, 'r', true)
    unlabeled_fd:binary():littleEndianEncoding()
@@ -102,13 +102,15 @@ if opt.unlabeled == true then
 end
 
 -- ----------------------------------------------------------------------
--- print '==> preprocessing data'
+print '==> preprocessing data'
 
--- -- Preprocessing requires a floating point representation (the original
--- -- data is stored on bytes). Types can be easily converted in Torch, 
--- -- in general by doing: dst = src:type('torch.TypeTensor'), 
--- -- where Type=='Float','Double','Byte','Int',... Shortcuts are provided
--- -- for simplicity (float(),double(),cuda(),...):
+
+
+-- Preprocessing requires a floating point representation (the original
+-- data is stored on bytes). Types can be easily converted in Torch, 
+-- in general by doing: dst = src:type('torch.TypeTensor'), 
+-- where Type=='Float','Double','Byte','Int',... Shortcuts are provided
+-- for simplicity (float(),double(),cuda(),...):
 
 -- trainData.data = trainData.data:float()
 -- testData.data = testData.data:float()

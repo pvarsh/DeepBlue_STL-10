@@ -1,7 +1,13 @@
 ----------
--- Working to recreate the model Christian (hence cp in file name)
+-- Working to recreate the model Christian Puhrsch (hence cp in file name)
 -- used as baseline kaggle submission
 ----------
+
+----------
+-- Will start working to get this into the pipeline after lunch today (Sunday)
+-- so if you want to make changes, please do in separate branch or 
+-- copy file to separate folder
+---------- Peter
 
 require 'nn';
 require 'image';

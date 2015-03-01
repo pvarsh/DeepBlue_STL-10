@@ -20,7 +20,7 @@ nfeats = 3        -- number of channels in input images
 nstates = 23      -- number of convolution kernels
 filtsize = 7      -- width and height of convolution kernels
 stepsize = 2      -- stride size for convolution and pooling
-padding = 2       -- for padding
+-- padding = 2       -- for padding
 noutputs = 10     -- number of output classes
 pooling = 2       -- width and height of pooling 
 drop_prob = 0.5   -- dropout probability (regularization)
@@ -34,7 +34,7 @@ drop_prob = 0.5   -- dropout probability (regularization)
 -- Softmax layer
 
 model = nn.Sequential()
-model:add(nn.SpatialZeroPadding(padding, padding, padding, padding))
+-- model:add(nn.SpatialZeroPadding(padding, padding, padding, padding))
 model:add(nn.SpatialConvolution(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
 model:add(nn.ReLU())
 model:add(nn.SpatialMaxPooling(pooling, pooling, stepsize, stepsize))

@@ -27,9 +27,9 @@ function test()
    -- set model to evaluate mode (for modules that differ in training and testing, like Dropout)
    model:evaluate()
 
-   print('==> opening results file')
-   file = io.open("results/"..epoch.."classifications.csv","w")
-   file:write("Id,Prediction")
+   --print('==> opening results file')
+   --file = io.open("results/"..epoch.."classifications.csv","w")
+   --file:write("Id,Prediction")
 
    -- test over test data
    print('==> testing on test set:')
@@ -49,15 +49,17 @@ function test()
       confusion:add(pred, target)
 
       -- pick out model's  choice
-      m = pred:max()
-      idx = torch.linspace(1,pred:size(1),pred:size(1))
-      p = idx[pred:eq(m)]
-      file:write("\n",t,",",p[1])
+      --m = pred:max()
+      --torch.save('pred.lua',pred)
+
+      --idx = torch.linspace(1,pred:size(1),pred:size(1))
+      --p = idx[pred:eq(m)]
+      --file:write("\n",t,",",p[1])
    end
 
-   print '==> writing to results file'
-   file:flush()
-   file:close()
+   --print '==> writing to results file'
+   --file:flush()
+   --file:close()
 
    print '==> defining test procedure'
 

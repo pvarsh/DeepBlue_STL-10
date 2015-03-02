@@ -8,10 +8,10 @@
 
 
 ---- CUDA code
--- if opt.type == 'cuda' then
---    model:cuda()
---    criterion:cuda()
--- end
+if opt.type == 'cuda' then
+   model:cuda()
+   criterion:cuda()
+end
 
 ----------------------------------------------------------------------
 print '==> setting up classes and confusion matrix'

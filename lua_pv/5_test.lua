@@ -28,8 +28,8 @@ function test()
    model:evaluate()
 
    -- print('==> opening results file')
-   file = io.open("results/"..epoch.."classifications.csv","w")
-   file:write("Id, Prediction")
+   file = io.open("results/"..epoch.."_classifications.csv","w")
+   file:write("Id,Prediction")
 
    -- test over test data
    print('==> testing on test set:')
@@ -54,7 +54,7 @@ function test()
 
       idx = torch.linspace(1,pred:size(1),pred:size(1))
       p = idx[pred_flt:eq(m)]
-      file:write("\n",t,", ",p[1])
+      file:write("\n",t," , ",p[1])
    end
 
    -- print '==> writing to results file'

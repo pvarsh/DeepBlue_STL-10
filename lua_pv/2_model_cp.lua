@@ -35,11 +35,20 @@ drop_prob = 0.5   -- dropout probability (regularization)
 
 model = nn.Sequential()
 -- model:add(nn.SpatialZeroPadding(padding, padding, padding, padding))
-model:add(nn.SpatialConvolution(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
+if opt.type == 'cuda' then
+	model:add(nn.SpatialConvolutionMM(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
+else 
+	model:add(nn.SpatialConvolution(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
+end
 model:add(nn.ReLU())
 model:add(nn.SpatialMaxPooling(pooling, pooling, stepsize, stepsize))
+if opt.type == 'cuda' then
+	model:add(nn.View(23*23*23))
+end
 model:add(nn.Dropout(drop_prob))
-model:add(nn.Reshape(23*23*23))
+if opt.type ~= 'cuda' then
+	model:add(nn.Reshape(23*23*23))
+end
 model:add(nn.Linear(23*23*23, 50))
 model:add(nn.ReLU())
 model:add(nn.Linear(50, noutputs))

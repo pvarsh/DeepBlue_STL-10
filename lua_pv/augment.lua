@@ -34,4 +34,8 @@ end
 trainData.data = data
 trainData.labels = labels
 
+-- Size variables are used in train and test functions
+trsize = trainData:size()
+tesize = testData:size()
+
 print '==> augmentation complete'

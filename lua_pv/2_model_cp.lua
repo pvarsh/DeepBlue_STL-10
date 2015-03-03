@@ -19,7 +19,7 @@ print '==> define parameters'
 -- nfeats = 3        -- number of channels in input images
 -- nstates = 23      -- number of convolution kernels
 -- filtsize = 7      -- width and height of convolution kernels
--- stepsize = 2      -- stride size for convolution and pooling
+stepsize = 2      -- stride size for convolution and pooling
 -- -- padding = 2       -- for padding
 -- noutputs = 10     -- number of output classes
 -- pooling = 2       -- width and height of pooling 
@@ -38,7 +38,7 @@ ninputs = nfeats*width*height
 nhiddens = ninputs / 2
 
 -- hidden units, filter sizes (for ConvNet only):
-nstates = {64,64,128}
+nstates = {200,200,400}
 filtsize = 5
 poolsize = 2
 
@@ -64,14 +64,14 @@ if opt.type == 'cuda' then
  --    model:add(nn.Linear(50, noutputs))
 
     -- stage 1 : filter bank -> squashing -> L2 pooling -> normalization
-    model:add(nn.SpatialConvolutionMM(nfeats, nstates[1], filtsize, filtsize))
+    model:add(nn.SpatialConvolutionMM(nfeats, nstates[1], filtsize, filtsize, stepsize, stepsize))
     model:add(nn.ReLU())
-    model:add(nn.SpatialMaxPooling(poolsize,poolsize,poolsize,poolsize))
+    model:add(nn.SpatialMaxPooling(poolsize,poolsize,poolsize,poolsize, stepsize, stepsize))
 
     -- stage 2 : filter bank -> squashing -> L2 pooling -> normalization
-    model:add(nn.SpatialConvolutionMM(nstates[1], nstates[2], filtsize, filtsize))
+    model:add(nn.SpatialConvolutionMM(nstates[1], nstates[2], filtsize, filtsize, stepsize, stepsize))
     model:add(nn.ReLU())
-    model:add(nn.SpatialMaxPooling(poolsize,poolsize,poolsize,poolsize))
+    model:add(nn.SpatialMaxPooling(poolsize,poolsize,poolsize,poolsize, stepsize, stepsize))
 
     -- stage 3 : standard 2-layer neural network
     model:add(nn.View(nstates[2]*filtsize*filtsize))

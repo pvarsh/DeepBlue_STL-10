@@ -29,7 +29,7 @@ function test()
 
    -- print('==> opening results file')
    file = io.open("results/"..epoch.."_classifications.csv","w")
-   file:write("Id,Prediction")
+   file:write("Id,Category")
 
    -- test over test data
    print('==> testing on test set:')

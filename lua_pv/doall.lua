@@ -24,6 +24,7 @@ cmd:option('-runlocal', false, 'indicate true if running on local machine')
 cmd:option('-yuv', true, 'convert images from RGB to YUV')
 cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
 cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
+cmd:option('-subset', false, 'subset 20 training and test values for preprocessing testing')
 -- Parse options
 opt = cmd:parse(arg or {})
 ----------------------------------------------------------------------
@@ -42,6 +43,7 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
 dofile '1_data.lua'
+dofile 'augment.lua'
 dofile '2_model_cp.lua'
 dofile '3_loss.lua'
 dofile '4_train.lua'

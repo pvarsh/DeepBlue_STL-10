@@ -38,7 +38,7 @@ ninputs = nfeats*width*height
 nhiddens = ninputs / 2
 
 -- hidden units, filter sizes (for ConvNet only):
-nstates = {200,200,400,800}
+nstates = {200,400,800}
 filtsize = 5
 poolsize = 2
 
@@ -73,17 +73,12 @@ if opt.type == 'cuda' then
     model:add(nn.ReLU())
     model:add(nn.SpatialMaxPooling(poolsize,poolsize,poolsize,poolsize, stepsize, stepsize))
 
-    -- stage 3 : filter bank -> squashing -> L2 pooling -> normalization
-    model:add(nn.SpatialConvolutionMM(nstates[2], nstates[3], filtsize, filtsize, stepsize, stepsize))
-    model:add(nn.ReLU())
-    model:add(nn.SpatialMaxPooling(poolsize,poolsize,poolsize,poolsize, stepsize, stepsize))
-
-    -- stage 4 : standard 2-layer neural network
-    model:add(nn.View(nstates[3]*filtsize*filtsize))
+    -- stage 3 : standard 2-layer neural network
+    model:add(nn.View(nstates[2]*filtsize*filtsize))
     model:add(nn.Dropout(0.5))
-    model:add(nn.Linear(nstates[3]*filtsize*filtsize, nstates[4]))
+    model:add(nn.Linear(nstates[2]*filtsize*filtsize, nstates[3]))
     model:add(nn.ReLU())
-    model:add(nn.Linear(nstates[4], noutputs))
+    model:add(nn.Linear(nstates[3], noutputs))
 
 else 
 	model:add(nn.SpatialConvolution(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))

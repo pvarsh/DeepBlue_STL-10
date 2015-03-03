@@ -7,4 +7,3 @@ Assignment 2. Deep leaning.
 
 Currently lua_pv has a working implementation of Christian's baseline architecture without the testing module. It does not use CUDA yet.
 
-test

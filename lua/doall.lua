@@ -47,7 +47,8 @@ torch.manualSeed(opt.seed)
 dofile 'data.lua'
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
-else if opt.model == 'a1' then
+end
+if opt.model == 'a1' then
     dofile 'model_a1.lua'
 end
 dofile 'loss.lua'

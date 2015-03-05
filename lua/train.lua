@@ -54,29 +54,55 @@ function train()
    -- do one epoch
    print('==> doing epoch on training data:')
    print("==> online epoch # " .. epoch .. ' [batchSize = ' .. opt.batchSize .. ']')
-
-
    for t = 1,trainData:size(),opt.batchSize do
-
       -- disp progress
       xlua.progress(t, trainData:size())
 
       -- create mini batch
-      local inputs  = trainData.data[{{t, math.min(t+opt.batchSize-1, trainData:size())}}]
-      local targets = trainData.labels[{{t, math.min(t+opt.batchSize-1, trainData:size())}}]
-      
-      gradParameters:zero()
-      
-      local output = model:forward(inputs)
-      local f = criterion:forward(output, targets)
+      local inputs = {}
+      local targets = {}
+      for i = t,math.min(t+opt.batchSize-1,trainData:size()) do
+         -- load new sample
+         local input = trainData.data[shuffle[i]]
+         local target = trainData.labels[shuffle[i]]
+         if opt.type == 'double' then input = input:double()
+         elseif opt.type == 'cuda' then input = input:cuda() end
+         table.insert(inputs, input)
+         table.insert(targets, target)
+      end
 
-      df_do = criterion:backward(output, targets)
-      model:backward(inputs, df_do)
+      -- create closure to evaluate f(X) and df/dX
+      local feval = function(x)
+                       -- get new parameters
+                       if x ~= parameters then
+                          parameters:copy(x)
+                       end
 
-      confusion:add(output, targets)
+                       -- reset gradients
+                       gradParameters:zero()
 
-      parameters:add(-opt.learningRate, gradParameters)
+                       -- evaluate function for complete mini batch
+                       
+                       -- estimate f
+                       local outputs = model:forward(inputs)
+                       local f = criterion:forward(outputs, targets)
 
+                       -- estimate df/dW
+                       local df_do = criterion:backward(outputs, targets)
+                       model:backward(inputs, df_do)
+
+                       -- update confusion
+                       confusion:add(outputs, targets)
+
+                       -- normalize gradients and f(X)
+                       gradParameters:div(#inputs)
+                       f = f/#inputs
+
+                       -- return f and df/dX
+                       return f,gradParameters
+                    end
+      -- optimize on current mini-batch
+      optimMethod(feval, parameters, optimState)
    end
 
    -- time taken

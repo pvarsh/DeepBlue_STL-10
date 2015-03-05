@@ -111,8 +111,14 @@ print '==> preprocessing data'
 -- Convert to Float Tensor
 trainData.data = trainData.data:float()
 testData.data = testData.data:float()
+
+-- Also convert labels to floats for CUDA compatibility
+trainData.labels = trainData.labels:float()
+testData.labels = testData.labels:float()
+
 if opt.unlabeled == true then
    unlabeledData.data = unlabeledData.data:float()
+   unlabeledData.labels = unlabeledData.labels:float()
 end
 
 -- Convert from RGB to YUV

@@ -49,7 +49,7 @@ function train()
    model:training()
 
    -- shuffle at each epoch
-   shuffle = torch.randperm(trsize)
+   shuffle = torch.randperm(trainData:size())
 
    -- do one epoch
    print('==> doing epoch on training data:')
@@ -71,6 +71,7 @@ function train()
          table.insert(targets, target)
       end
 
+   end
       -- create closure to evaluate f(X) and df/dX
       local feval = function(x)
                        -- get new parameters
@@ -85,23 +86,23 @@ function train()
                        local f = 0
 
                        -- evaluate function for complete mini batch
-                       for i = 1,#inputs do
+                       --for i = 1,#inputs do
                           -- estimate f
-                          local output = model:forward(inputs[i])
-                          local err = criterion:forward(output, targets[i])
-                          f = f + err
+                       local output = model:forward(inputs)
+                       local f = criterion:forward(output, targets)
+                       --f = f + err
 
-                          -- estimate df/dW
-                          local df_do = criterion:backward(output, targets[i])
-                          model:backward(inputs[i], df_do)
+                       -- estimate df/dW
+                       local df_do = criterion:backward(output, targets)
+                       model:backward(inputs, df_do)
 
-                          -- update confusion
-                          confusion:add(output, targets[i])
-                       end
+                       -- update confusion
+                       confusion:add(output, targets)
+                       --end
 
                        -- normalize gradients and f(X)
-                       gradParameters:div(#inputs)
-                       f = f/#inputs
+                       --gradParameters:div(#inputs)
+                       --f = f/#inputs
 
                        -- return f and df/dX
                        return f,gradParameters

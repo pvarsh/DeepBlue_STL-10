@@ -46,7 +46,7 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
 dofile 'data.lua'
-dofile 'augment.lua'
+--dofile 'augment.lua'
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
 end

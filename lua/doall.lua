@@ -26,6 +26,7 @@ cmd:option('-yuv', true, 'convert images from RGB to YUV')
 cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
 cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
 cmd:option('-model', 'a1', 'choose a model to use: cp | a1')
+cmd:option('-subset', false, 'subset 20 training and test values for preprocessing testing')
 
 -- Parse options
 opt = cmd:parse(arg or {})
@@ -45,6 +46,7 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
 dofile 'data.lua'
+dofile 'augment.lua'
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
 end

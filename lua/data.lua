@@ -95,7 +95,12 @@ if opt.unlabeled == true then
    }
 end
 
-
+if opt.subset == true then
+   trainData.data = trainData.data[{ {1,20},{},{},{} }]
+   trainData.labels = trainData.labels[{ {1,20} }]
+   testData.data = testData.data[{ {1,20},{},{},{} }]
+   testData.labels = testData.labels[{ {1,20} }]
+end
 -- Size variables are used in train and test functions
 trsize = trainData:size()
 tesize = testData:size()

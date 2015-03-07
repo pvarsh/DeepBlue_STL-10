@@ -190,6 +190,9 @@ end
 trainData.data = trainData.padded
 testData.data  = testData.padded
 
+trainData.padded = nil
+testData.padded = nil
+
 ----------------------------------------------------------------------
 print '==> verify statistics'
 

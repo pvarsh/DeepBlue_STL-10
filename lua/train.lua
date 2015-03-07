@@ -49,9 +49,11 @@ function train()
    model:training()
 
    -- shuffle at each epoch
-   shuffle = torch.randperm(trsize)
-   trainData.data = trainData.data[shuffle]
-   trainData.labels = trainData.labels[shuffle]
+    shuffle = torch.randperm(trainData:size())
+    for i = 1, trainData:size() do
+        trainData.data[i] = trainData.data[{ {shuffle[i]},{},{},{} }]
+        trainData.labels[i] = trainData.labels[{ {shuffle[i]} }]
+    end
 
    -- do one epoch
    print("==> beginning epoch # " .. epoch .. ' [batchSize = ' .. opt.batchSize .. ']')
@@ -83,7 +85,7 @@ function train()
          model:backward(inputs, df_do)
 
          -- update confusion
-         for i = 1,targets:size() do
+         for i = 1,targets:size()[1] do
             confusion:add(outputs[i], targets[i])
          end
 
@@ -110,10 +112,10 @@ function train()
    end
 
    -- save/log current net
-   local filename = paths.concat(opt.save, 'model.net')
-   os.execute('mkdir -p ' .. sys.dirname(filename))
-   print('==> saving model to '..filename)
-   torch.save(filename, model)
+   --local filename = paths.concat(opt.save, 'model.net')
+   --os.execute('mkdir -p ' .. sys.dirname(filename))
+   --print('==> saving model to '..filename)
+   --torch.save(filename, model)
 
    -- next epoch
    confusion:zero()

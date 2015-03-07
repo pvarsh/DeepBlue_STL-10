@@ -12,9 +12,9 @@ cmd:text('Options:')
 -- Options copied from Clement Farabet's tutorial
 cmd:option('-visualize', true, 'visualize input data and weights during training')
 cmd:option('-save', 'results', 'subdirectory to save/log experiments in')
-cmd:option('-learningRate', 1e-3, 'learning rate at t=0')
-cmd:option('-batchSize', 128, 'mini-batch size (1 = pure stochastic)')
-cmd:option('-weightDecay', 0, 'weight decay (SGD only)')
+cmd:option('-learningRate', 0.001, 'learning rate at t=0')
+cmd:option('-batchSize', 1, 'mini-batch size (1 = pure stochastic)')
+cmd:option('-weightDecay', 0.998, 'weight decay (SGD only)')
 cmd:option('-momentum', 0, 'momentum (SGD only)')
 cmd:option('-type', 'cuda', 'type: double | float | cuda')
 cmd:option('-seed', 1, 'fixed input seed for repeatable experiments')
@@ -25,7 +25,7 @@ cmd:option('-runlocal', false, 'indicate true if running on local machine')
 cmd:option('-yuv', true, 'convert images from RGB to YUV')
 cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
 cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
-cmd:option('-model', 'a1', 'choose a model to use: cp | a1')
+cmd:option('-model', 'cp', 'choose a model to use: cp | a1')
 cmd:option('-subset', false, 'subset 20 training and test values for preprocessing testing')
 
 -- Parse options
@@ -61,5 +61,5 @@ dofile 'test.lua'
 -- Train and test repeatedly
 while true do
    train()
-   test()
+   --test()
 end

@@ -54,6 +54,7 @@ if opt.model == 'a1' then
     dofile 'model_a1.lua'
 end
 dofile 'loss.lua'
+dofile 'validate.lua'
 dofile 'train.lua'
 dofile 'test.lua'
 
@@ -61,5 +62,6 @@ dofile 'test.lua'
 -- Train and test repeatedly
 while true do
    train()
+   validate()
    --test()
 end

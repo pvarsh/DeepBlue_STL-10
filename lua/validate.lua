@@ -9,6 +9,19 @@ require 'xlua'
 require 'optim'
 
 ----------------------------------------------------------------------
+print '==> defining validation set'
+
+validateData = {
+   data = trainData.data[{ {(0.9*trainData:size())+1,trainData:size()},{},{},{} }],
+   labels = trainData.labels[{ {(0.9*trainData:size())+1,trainData:size()} }],
+   size = function() return 0.1*(trainData:size()) end
+}
+
+trainData.data = trainData.data[{ {1,0.9*trainData:size()},{},{},{} }]
+trainData.labels = trainData.labels[{ {1,trainData:size()} }]
+trainData.size = function() return trainData:size() end
+
+----------------------------------------------------------------------
 print '==> defining validate procedure'
 
 -- validate function

@@ -107,10 +107,18 @@ tesize = testData:size()
 
 
 --------------------------------------------------------------------------------
+-- Augmentation doc:
+-- Takes training set of size N and generates horizontal flips of each image
+-- producing a training set of size 2N. Then creates n_folds clones of the resulting
+-- training set. The original and flipped images remain unchanged. The remaining
+-- (n_folds-1)*2N images are transformed using random rotations, translations, 
+-- and color space adjustments in HSV mode.
+
 print('==> Augmenting data')
 
+
 N = train_data:size()[1]
-n_folds = 4
+n_folds = 4 -- (n_folds - 1) copies of original and flipped data will be transformed
 train_size = train_data:size()
 train_size[1] = train_size[1] * 2 * n_folds -- mutliplied by two for rotations
 

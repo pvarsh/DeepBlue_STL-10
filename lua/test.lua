@@ -13,6 +13,8 @@ print '==> defining test procedure'
 
 -- test function
 function test()
+
+   epoch = epoch or 1
    
    -- local vars
    local time = sys.clock()

@@ -49,11 +49,11 @@ function train()
    model:training()
 
    -- shuffle at each epoch
-    shuffle = torch.randperm(trainData:size())
-    for i = 1, trainData:size() do
-        trainData.data[i] = trainData.data[{ {shuffle[i]},{},{},{} }]
-        trainData.labels[i] = trainData.labels[{ {shuffle[i]} }]
-    end
+    --shuffle = torch.randperm(trainData:size())
+    --for i = 1, trainData:size() do
+    --    trainData.data[i] = trainData.data[{ {shuffle[i]},{},{},{} }]
+    --    trainData.labels[i] = trainData.labels[{ {shuffle[i]} }]
+    --end
 
    -- do one epoch
    print("==> beginning epoch # " .. epoch .. ' [batchSize = ' .. opt.batchSize .. ']')

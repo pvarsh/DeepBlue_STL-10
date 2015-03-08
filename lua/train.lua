@@ -16,10 +16,6 @@ print '==> setting up classes and confusion matrix'
 classes = {'1','2','3','4','5','6','7','8','9','10'}
 confusion = optim.ConfusionMatrix(classes)
 
--- Log results to files
-trainLogger = optim.Logger(paths.concat(opt.save, 'train.log'))
-testLogger = optim.Logger(paths.concat(opt.save, 'test.log'))
-
 -- Retreive model parameters
 parameters, gradParameters = model:getParameters()
 
@@ -42,9 +38,6 @@ function train()
    -- epoch tracker
    epoch = epoch or 1
 
-   -- local vars
-   local time = sys.clock()
-
    -- set model to training mode (for modules that differ in training and testing, like Dropout)
    model:training()
 
@@ -55,9 +48,6 @@ function train()
     --    trainData.labels[i] = trainData.labels[{ {shuffle[i]} }]
     --end
 
-   -- do one epoch
-   print("==> beginning epoch # " .. epoch .. ' [batchSize = ' .. opt.batchSize .. ']')
-   
    for t = 1,trainData:size(),opt.batchSize do
       -- disp progress
       xlua.progress(t, trainData:size())
@@ -96,20 +86,8 @@ function train()
       optimMethod(feval, parameters, optimState)
    end
 
-   -- time taken
-   time = sys.clock() - time
-   time = time / trainData:size()
-   print("\n==> time to learn 1 sample = " .. (time*1000) .. 'ms')
-
    -- print confusion matrix
    print(confusion)
-
-   -- update logger/plot
-   trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
-   if opt.plot then
-      trainLogger:style{['% mean class accuracy (train set)'] = '-'}
-      trainLogger:plot()
-   end
 
    -- save/log current net
    --local filename = paths.concat(opt.save, 'model.net')

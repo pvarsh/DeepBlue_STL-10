@@ -9,20 +9,28 @@ require 'xlua'
 require 'optim'
 
 ----------------------------------------------------------------------
+print '==> defining validation set'
+
+oldSize = trainData:size()
+
+validateData = {
+   data = trainData.data[{ {(0.9*oldSize)+1,oldSize},{},{},{} }],
+   labels = trainData.labels[{ {(0.9*oldSize)+1,oldSize} }],
+   size = function() return 0.1*oldSize end
+}
+
+trainData = {
+   data = trainData.data[{ {1,0.9*oldSize},{},{},{} }],
+   labels = trainData.labels[{ {1,0.9*oldSize} }],
+   size = function() return 0.9*oldSize end
+}
+
+----------------------------------------------------------------------
 print '==> defining validate procedure'
 
 -- validate function
 function validate()
    
-   -- local vars
-   local time = sys.clock()
-
-   -- averaged param use?
-   if average then
-      cachedparams = parameters:clone()
-      parameters:copy(average)
-   end
-
    -- set model to evaluate mode (for modules that differ in training and testing, like Dropout)
    model:evaluate()
 
@@ -40,32 +48,13 @@ function validate()
 
       -- validation sample
       local pred = model:forward(input)
-      -- print("\n" .. target .. "\n")
       confusion:add(pred, target)
 
    end
 
-   -- timing
-   time = sys.clock() - time
-   time = time / validateData:size()
-   print("\n==> time to validate 1 sample = " .. (time*1000) .. 'ms')
-
    -- print confusion matrix
    print(confusion)
 
-   -- update log/plot
-   validateLogger:add{['% mean class accuracy (validation set)'] = confusion.totalValid * 100}
-   if opt.plot then
-      validateLogger:style{['% mean class accuracy (validation set)'] = '-'}
-      validateLogger:plot()
-   end
-
-   -- averaged param use?
-   if average then
-      -- restore parameters
-      parameters:copy(cachedparams)
-   end
-   
    -- next iteration:
    confusion:zero()
 end

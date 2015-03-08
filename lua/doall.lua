@@ -12,7 +12,7 @@ cmd:text('Options:')
 -- Options copied from Clement Farabet's tutorial
 cmd:option('-visualize', true, 'visualize input data and weights during training')
 cmd:option('-save', 'results', 'subdirectory to save/log experiments in')
-cmd:option('-learningRate', 0.001, 'learning rate at t=0')
+cmd:option('-learningRate', 0.01, 'learning rate at t=0')
 cmd:option('-batchSize', 8, 'mini-batch size (1 = pure stochastic)')
 cmd:option('-weightDecay', 0, 'weight decay (SGD only)')
 cmd:option('-momentum', 0, 'momentum (SGD only)')
@@ -54,6 +54,7 @@ if opt.model == 'a1' then
     dofile 'model_a1.lua'
 end
 dofile 'loss.lua'
+dofile 'validate.lua'
 dofile 'train.lua'
 dofile 'test.lua'
 
@@ -61,5 +62,6 @@ dofile 'test.lua'
 -- Train and test repeatedly
 while true do
    train()
+   validate()
    --test()
 end

@@ -46,7 +46,7 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
 dofile 'data.lua'
---dofile 'augment.lua'
+dofile 'augment_2.lua'
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
 end
@@ -54,6 +54,7 @@ if opt.model == 'a1' then
     dofile 'model_a1.lua'
 end
 dofile 'loss.lua'
+dofile 'validate.lua'
 dofile 'train.lua'
 dofile 'test.lua'
 
@@ -61,5 +62,6 @@ dofile 'test.lua'
 -- Train and test repeatedly
 while true do
    train()
-   test()
+   validate()
+   --test()
 end

@@ -74,18 +74,18 @@ if opt.unlabeled == true then
    unlabeled_fd:readByte(unlabeled_data:storage())
 end
 
--- The last 500 images reserved for validation
-trainData = {
-   data = train_data[{ {1,4500},{},{},{} }],
-   labels = train_labels[{ {1,4500} }],
-   size = function() return trainData.data:size()[1] end
-}
+-- -- The last 500 images reserved for validation
+-- trainData = {
+--    data = train_data[{ {1,4500},{},{},{} }],
+--    labels = train_labels[{ {1,4500} }],
+--    size = function() return trainData.data:size()[1] end
+-- }
 
-validationData = {
-  data = train_data[{ {4501,5000},{},{},{} }],
-  labels = train_labels[{ {4501,5000} }],
-  size = function() return validationData.data:size()[1] end
-}
+-- validationData = {
+--   data = train_data[{ {4501,5000},{},{},{} }],
+--   labels = train_labels[{ {4501,5000} }],
+--   size = function() return validationData.data:size()[1] end
+-- }
 
 -- testData = {
 --    data = test_data,
@@ -124,7 +124,7 @@ print('==> Augmenting data')
 N = 4500
 N_validation = 500
 
-n_folds = 4 -- (n_folds - 1) copies of original and flipped data will be transformed
+n_folds = 2 -- (n_folds - 1) copies of original and flipped data will be transformed
 
 -- Computing augmented training data tensor shape
 train_size = train_data:size()
@@ -164,7 +164,7 @@ trainData.data[{ {1,N} }] = train_data[{ {1,N} }]:clone()
 print '==> reflections'
 -- hflips
 for i=1,N do
-  trainData.data[N+i] = trainData.data[i]
+  trainData.data[N+i] = image.hflip(trainData.data[i])
     -- image.hflip(trainData.data[N+i], trainData.data[i])
 end
 print '====> cloning folds'

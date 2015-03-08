@@ -1,3 +1,22 @@
+print '==> defining validation set'
+
+oldSize = trainData:size()
+validateFrac = 0.05
+
+validateData = {
+   data = trainData.data[{ {((1.0-validateFrac)*oldSize)+1,oldSize},{},{},{} }],
+   labels = trainData.labels[{ {((1.0-validateFrac)*oldSize)+1,oldSize} }],
+   size = function() return validateFrac*oldSize end
+}
+
+trainData = {
+   data = trainData.data[{ {1,(1.0-validateFrac)*oldSize},{},{},{} }],
+   labels = trainData.labels[{ {1,(1.0-validateFrac)*oldSize} }],
+   size = function() return (1.0-validateFrac)*oldSize end
+}
+
+trsize = trainData:size()
+
 print '==> setting up augmentation'
 ------ Set up size and count variables
 n_training = trainData:size() -- original training samples
@@ -35,11 +54,6 @@ end
 ------ Point trainData.data and trainData.labels to new tensors
 trainData.data = data
 trainData.labels = labels
-
--- Size variables are used in train and test functions
-trsize = trainData:size()
-tesize = testData:size()
-trainData.size = size = function() return trsize end
-
+trainData.size = function() return n_data end
 
 print '==> augmentation complete'

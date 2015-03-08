@@ -37,7 +37,8 @@ function train()
 
    -- epoch tracker
    epoch = epoch or 1
-
+   
+   print(">> on epoch #" .. epoch)
    -- set model to training mode (for modules that differ in training and testing, like Dropout)
    model:training()
 

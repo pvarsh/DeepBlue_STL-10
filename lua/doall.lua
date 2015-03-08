@@ -25,7 +25,7 @@ cmd:option('-runlocal', false, 'indicate true if running on local machine')
 cmd:option('-yuv', true, 'convert images from RGB to YUV')
 cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
 cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
-cmd:option('-model', 'cp', 'choose a model to use: cp | a1')
+cmd:option('-model', 'a1', 'choose a model to use: cp | a1')
 cmd:option('-subset', false, 'subset 20 training and test values for preprocessing testing')
 
 -- Parse options
@@ -48,7 +48,6 @@ torch.manualSeed(opt.seed)
 --trainData = torch.load('augmented_preprocessed_training_set')
 dofile 'data.lua'
 dofile 'augment_2.lua'
-
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
 end

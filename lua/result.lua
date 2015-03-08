@@ -12,7 +12,7 @@
 require 'torch'   -- torch
 require 'xlua'    -- xlua provides useful tools, like progress bars
 require 'optim'   -- an optimization package, for online and batch methods
-require 'nn'      -- provides a normalization operator
+require 'cunn'
 
 -- Use 4 threads
 torch.setnumthreads(4)
@@ -89,6 +89,7 @@ for t = 1,testData:size() do
     local pred = model:forward(input)
     confusion:add(pred, target)
 
+    pred = pred:float()
     -- pick out model's  choice
     m = pred:max()
     idx = torch.linspace(1,pred:size(1),pred:size(1))

@@ -42,14 +42,20 @@ if opt.model == 'a1' then
     dofile 'model_a1.lua'
 end
 
-dofile 'validate.lua'
+if opt.validate == true then
+    dofile 'validate.lua'
+end
+
 dofile 'train.lua'
 
 ----------------------------------------------------------------------
 -- Train and test repeatedly
 while true do
     train()
-    validate()
+    
+    if opt.validate == true then
+        validate()
+    end
 
     -- save model.net every 10 epochs
     if epoch % 10 == 0 then 
@@ -57,5 +63,6 @@ while true do
         os.execute('mkdir -p ' .. sys.dirname(filename))
         print('>> Saving model to '..filename..'at epoch #'..epoch)
         torch.save(filename, model)
+        dofile 'result.lua'
     end
 end

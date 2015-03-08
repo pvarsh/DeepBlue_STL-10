@@ -27,7 +27,7 @@ torch.setdefaulttensortype('torch.FloatTensor')
 print '>> Running...'
 
 if not paths.filep('../data/trainData.lua') then
-    dofile 'data_bin.lua'
+    dofile 'data.lua'
     trainData = torch.load('../data/trainData.lua')
 else 
     trainData = torch.load('../data/trainData.lua')
@@ -51,9 +51,11 @@ while true do
     train()
     validate()
 
-    -- save/log current net
-    --local filename = paths.concat(opt.save, 'model.net')
-    --os.execute('mkdir -p ' .. sys.dirname(filename))
-    --print('==> saving model to '..filename)
-    --torch.save(filename, model)
+    -- save model.net every 10 epochs
+    if epoch % 10 == 0 then 
+        local filename = 'results/model.net'
+        os.execute('mkdir -p ' .. sys.dirname(filename))
+        print('>> Saving model to '..filename..'at epoch #'..epoch)
+        torch.save(filename, model)
+    end
 end

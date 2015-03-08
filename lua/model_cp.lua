@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------
 -- Team Deep Blue
--- 3/2/2015
+-- 3/8/2015
 -- 
 -- Recreation of Christian Puhrsch (cp) model
 -- Used as baseline kaggle submission
@@ -11,7 +11,7 @@ require 'optim'
 require 'xlua'
 
 ----------------------------------------------------------------------
-print '==> define parameters'
+print '>> Defining model...'
 
 nfeats = 3        -- number of channels in input images
 nstates = 23      -- number of convolution kernels
@@ -32,25 +32,15 @@ drop_prob = 0.5   -- dropout probability (regularization)
 
 model = nn.Sequential()
 
--- model:add(nn.SpatialZeroPadding(padding, padding, padding, padding))
+model:add(nn.SpatialConvolutionMM(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
+model:add(nn.ReLU())
+model:add(nn.SpatialMaxPooling(pooling, pooling, stepsize, stepsize))
 
-if opt.type == 'cuda' then
-	model:add(nn.SpatialConvolutionMM(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
-    model:add(nn.ReLU())
-    model:add(nn.SpatialMaxPooling(pooling, pooling, stepsize, stepsize))
-    
-    model:add(nn.View(23*23*23))
-    model:add(nn.Dropout(drop_prob))
-    model:add(nn.Linear(23*23*23, 50))
-    model:add(nn.ReLU())
-    model:add(nn.Linear(50, noutputs))
-else 
-	model:add(nn.SpatialConvolution(nfeats, nstates, filtsize, filtsize, stepsize, stepsize, padding))
-    model:add(nn.ReLU())
-    model:add(nn.SpatialMaxPooling(pooling, pooling, stepsize, stepsize))
-    
-    model:add(nn.Dropout(drop_prob))
-    model:add(nn.Linear(23*23*23, 50))
-    model:add(nn.ReLU())
-    model:add(nn.Linear(50, noutputs))
-end
+model:add(nn.View(23*23*23))
+model:add(nn.Dropout(drop_prob))
+model:add(nn.Linear(23*23*23, 50))
+model:add(nn.ReLU())
+model:add(nn.Linear(50, noutputs))
+
+model:add(nn.LogSoftMax())
+criterion = nn.ClassNLLCriterion()

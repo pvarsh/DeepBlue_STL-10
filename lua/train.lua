@@ -1,17 +1,14 @@
 ----------------------------------------------------------------------
 -- Team Deep Blue
--- 3/2/2015
+-- 3/8/2015
 -- 
 -- training routine using Stochastic Gradient Descent
 ----------------------------------------------------------------------
--- use CUDA
-if opt.type == 'cuda' then
-   model:cuda()
-   criterion:cuda()
-end
+-- Enable CUDA
+model:cuda()
+criterion:cuda()
 
-----------------------------------------------------------------------
-print '==> setting up classes and confusion matrix'
+print '>> Setting up confusion matrix...'
 
 classes = {'1','2','3','4','5','6','7','8','9','10'}
 confusion = optim.ConfusionMatrix(classes)
@@ -20,83 +17,80 @@ confusion = optim.ConfusionMatrix(classes)
 parameters, gradParameters = model:getParameters()
 
 ----------------------------------------------------------------------
-print '==> configuring optimizer'
+print '>> Configuring optimizer...'
 
 optimState = {
   learningRate = opt.learningRate,
   weightDecay = opt.weightDecay,
   momentum = opt.momentum,
-  learningRateDecay = 1e-4
+  learningRateDecay = opt.learningRateDecay
   }
+
 optimMethod = optim.sgd
 
 ----------------------------------------------------------------------
-print '==> defining training procedure'
+print '>> Defining training procedure...'
 
 function train()
 
-   -- epoch tracker
-   epoch = epoch or 1
-   
-   print(">> on epoch #" .. epoch)
-   -- set model to training mode (for modules that differ in training and testing, like Dropout)
-   model:training()
+    -- track epoch
+    epoch = epoch or 1   
+    print(">> Training on epoch #" .. epoch)
 
-   -- shuffle at each epoch
-    --shuffle = torch.randperm(trainData:size())
-    --for i = 1, trainData:size() do
-    --    trainData.data[i] = trainData.data[{ {shuffle[i]},{},{},{} }]
-    --    trainData.labels[i] = trainData.labels[{ {shuffle[i]} }]
-    --end
+    -- set model to training mode 
+    model:training()
 
-   for t = 1,trainData:size(),opt.batchSize do
-      -- disp progress
-      xlua.progress(t, trainData:size())
+    for t = 1,trainData:size(),opt.batchSize do
 
-      -- create mini batch
-      inputs = trainData.data[{ {t,math.min(t+opt.batchSize-1,trainData:size())},{},{},{} }]:cuda()
-      targets = trainData.labels[{ {t,math.min(t+opt.batchSize-1,trainData:size())} }]:cuda()
+        -- disp progress
+        xlua.progress(t, trainData:size())
 
-      -- create closure to evaluate f(X) and df/dX
-      local feval = function(x)
-         -- get new parameters
-         if x ~= parameters then
-            parameters:copy(x)
-         end
+        -- create mini batch
+        inputs = trainData.data[{ {t,math.min(t+opt.batchSize-1,trainData:size())},{},{},{} }]:cuda()
+        targets = trainData.labels[{ {t,math.min(t+opt.batchSize-1,trainData:size())} }]:cuda()
 
-         -- reset gradients
-         gradParameters:zero()
+        -- create closure to evaluate f(X) and df/dX
+        local feval = function(x)
 
-         -- estimate f
-         local outputs = model:forward(inputs)
-         local f = criterion:forward(outputs, targets)
+            -- get new parameters
+            if x ~= parameters then
+                parameters:copy(x)
+            end
 
-         -- estimate df/dW
-         local df_do = criterion:backward(outputs, targets)
-         model:backward(inputs, df_do)
+            -- reset gradients
+            gradParameters:zero()
 
-         -- update confusion
-         for i = 1,targets:size()[1] do
-            confusion:add(outputs[i], targets[i])
-         end
+            -- estimate f
+            local outputs = model:forward(inputs)
+            local f = criterion:forward(outputs, targets)
 
-         -- return f and df/dX
-         return f,gradParameters
-      end
-      -- optimize on current mini-batch
-      optimMethod(feval, parameters, optimState)
-   end
+            -- estimate df/dW
+            local df_do = criterion:backward(outputs, targets)
+            model:backward(inputs, df_do)
 
-   -- print confusion matrix
-   print(confusion)
+            -- update confusion matrix
+            for i = 1,targets:size()[1] do
+                confusion:add(outputs[i], targets[i])
+            end
 
-   -- save/log current net
-   --local filename = paths.concat(opt.save, 'model.net')
-   --os.execute('mkdir -p ' .. sys.dirname(filename))
-   --print('==> saving model to '..filename)
-   --torch.save(filename, model)
+            -- return f and df/dX
+            return f,gradParameters
+        end
 
-   -- next epoch
-   confusion:zero()
-   epoch = epoch + 1
+    -- optimize on current mini-batch
+    optimMethod(feval, parameters, optimState)
+    end
+
+    -- print confusion matrix
+    print(confusion)
+
+    -- save/log current net
+    --local filename = paths.concat(opt.save, 'model.net')
+    --os.execute('mkdir -p ' .. sys.dirname(filename))
+    --print('==> saving model to '..filename)
+    --torch.save(filename, model)
+
+    -- next epoch
+    confusion:zero()
+    epoch = epoch + 1
 end

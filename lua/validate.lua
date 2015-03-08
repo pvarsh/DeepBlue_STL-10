@@ -1,43 +1,42 @@
 ----------------------------------------------------------------------
 -- Team Deep Blue
--- 3/2/2015
+-- 3/8/2015
 -- 
--- validation routine
+-- Validation routine
 ----------------------------------------------------------------------
 require 'torch'
 require 'xlua'
 require 'optim'
 
 ----------------------------------------------------------------------
-print '==> defining validate procedure'
+print '>> Defining validation procedure...'
 
--- validate function
 function validate()
-   
-   -- set model to evaluate mode (for modules that differ in training and testing, like Dropout)
-   model:evaluate()
+    print('>> Validating...')
 
-   -- validate over validation data
-   print('==> validating on validation set:')
-   for t = 1,validateData:size() do
-      -- disp progress
-      xlua.progress(t, validateData:size())
+    -- set model to evaluate mode
+    model:evaluate()
 
-      -- get new sample
-      local input = validateData.data[t]
-      if opt.type == 'double' then input = input:double()
-      elseif opt.type == 'cuda' then input = input:cuda() end
-      local target = validateData.labels[t]
+    -- validate over validation data
+    
+    for t = 1,validateData:size() do
+        -- disp progress
+        xlua.progress(t, validateData:size())
 
-      -- validation sample
-      local pred = model:forward(input)
-      confusion:add(pred, target)
+        -- get new sample
+        local input = validateData.data[t]
+        input = input:cuda()
+        local target = validateData.labels[t]
 
-   end
+        -- validate sample
+        local pred = model:forward(input)
+        confusion:add(pred, target)
 
-   -- print confusion matrix
-   print(confusion)
+    end
 
-   -- next iteration:
-   confusion:zero()
+    -- print confusion matrix
+    print(confusion)
+
+    -- reset confusion matrix
+    confusion:zero()
 end

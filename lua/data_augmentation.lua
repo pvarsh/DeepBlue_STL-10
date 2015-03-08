@@ -49,10 +49,10 @@ train_fd:binary():littleEndianEncoding()
 train_label_fd = torch.DiskFile(path .. train_labels, 'r', true)
 train_label_fd:binary():littleEndianEncoding()
 
-test_fd = torch.DiskFile(path .. test_X, 'r', true)
-test_fd:binary():littleEndianEncoding()
-test_label_fd = torch.DiskFile(path .. test_labels, 'r', true)
-test_label_fd:binary():littleEndianEncoding()
+-- test_fd = torch.DiskFile(path .. test_X, 'r', true)
+-- test_fd:binary():littleEndianEncoding()
+-- test_label_fd = torch.DiskFile(path .. test_labels, 'r', true)
+-- test_label_fd:binary():littleEndianEncoding()
 
 train_data = torch.ByteTensor(5000,3,96,96)
 train_fd:readByte(train_data:storage())
@@ -60,11 +60,11 @@ train_data = train_data:transpose(4,3)
 train_labels = torch.ByteTensor(5000)
 train_label_fd:readByte(train_labels:storage())
 
-test_data = torch.ByteTensor(8000,3,96,96)
-test_fd:readByte(test_data:storage())
-test_data = test_data:transpose(4,3)
-test_labels = torch.ByteTensor(8000)
-test_label_fd:readByte(test_labels:storage())
+-- test_data = torch.ByteTensor(8000,3,96,96)
+-- test_fd:readByte(test_data:storage())
+-- test_data = test_data:transpose(4,3)
+-- test_labels = torch.ByteTensor(8000)
+-- test_label_fd:readByte(test_labels:storage())
 
 if opt.unlabeled == true then
    unlabeled_fd = torch.DiskFile(path .. unlabeled, 'r', true)
@@ -74,19 +74,26 @@ if opt.unlabeled == true then
    unlabeled_fd:readByte(unlabeled_data:storage())
 end
 
--- Put data in Lua tables
+---- Put data in Lua tables
 
+-- The last 500 images reserved for validation
 trainData = {
-   data = train_data,
-   labels = train_labels,
+   data = train_data[{ {1,4500},{},{},{} }],
+   labels = train_labels[{ {1,4500} }],
    size = function() return trainData.data:size()[1] end
 }
 
-testData = {
-   data = test_data,
-   labels = test_labels,
-   size = function() return testData.data:size()[1] end
+validationData = {
+  data = train_data[{ {4501,5000},{},{},{} }],
+  labels = train_labels[{ {4501,5000} }],
+  size = function() return validationData.data:size()[1] end
 }
+
+-- testData = {
+--    data = test_data,
+--    labels = test_labels,
+--    size = function() return testData.data:size()[1] end
+-- }
 
 if opt.unlabeled == true then
    unlabeledData = {
@@ -98,12 +105,12 @@ end
 if opt.subset == true then
    trainData.data = trainData.data[{ {1,20},{},{},{} }]
    trainData.labels = trainData.labels[{ {1,20} }]
-   testData.data = testData.data[{ {1,20},{},{},{} }]
-   testData.labels = testData.labels[{ {1,20} }]
+   -- testData.data = testData.data[{ {1,20},{},{},{} }]
+   -- testData.labels = testData.labels[{ {1,20} }]
 end
 -- Size variables are used in train and test functions
-trsize = trainData:size()
-tesize = testData:size()
+-- trsize = trainData:size()
+-- tesize = testData:size()
 
 
 --------------------------------------------------------------------------------
@@ -208,7 +215,7 @@ print '==> preprocessing data'
 
 -- Convert to Float Tensor
 trainData.data = trainData.data:float()
-testData.data = testData.data:float()
+-- testData.data = testData.data:float()
 if opt.unlabeled == true then
    unlabeledData.data = unlabeledData.data:float()
 end
@@ -219,9 +226,9 @@ if opt.yuv == true then
       trainData.data[i] = image.rgb2yuv(trainData.data[i])
    end
 
-   for i=1,testData:size() do
-      testData.data[i] = image.rgb2yuv(testData.data[i])
-   end
+   -- for i=1,testData:size() do
+   --    testData.data[i] = image.rgb2yuv(testData.data[i])
+   -- end
 
 -- TODO: Unlabeled conversion not implemented
 --       since only a subset of unlabeled data might be used
@@ -243,10 +250,10 @@ for i, channel in ipairs(channels) do
    trainData.data[{ {},i,{},{} }]:div(std[i])
 end
 -- Normalize test data using training data mean and std
-for i,channel in ipairs(channels) do
-   testData.data[{ {},i,{},{} }]:add(-mean[i])
-   testData.data[{ {},i,{},{} }]:div(std[i])
-end
+-- for i,channel in ipairs(channels) do
+--    testData.data[{ {},i,{},{} }]:add(-mean[i])
+--    testData.data[{ {},i,{},{} }]:div(std[i])
+-- end
 
 ------ Normalize each channel locally.
 -- Define normalization neighborhood and operation
@@ -259,34 +266,34 @@ for c in ipairs(channels) do
    end
 end
 -- Normalize test data
-for c in ipairs(channels) do
-   for i = 1,testData:size() do
-      testData.data[{ i,{c},{},{} }] = normalization:forward(testData.data[{ i,{c},{},{} }])
-   end
-end
+-- for c in ipairs(channels) do
+--    for i = 1,testData:size() do
+--       testData.data[{ i,{c},{},{} }] = normalization:forward(testData.data[{ i,{c},{},{} }])
+--    end
+-- end
 
 ----------------------------------------------------------------------
 print '==> zero padding (2px)'
 
 zeroPadder = nn.SpatialZeroPadding(2,2,2,2)
 trainData['padded'] = torch.FloatTensor(trainData:size(), 3, 100, 100)
-testData['padded'] = torch.FloatTensor(testData:size(), 3, 100, 100)
+-- testData['padded'] = torch.FloatTensor(testData:size(), 3, 100, 100)
 
 for i = 1,trainData:size() do
    trainData.padded[i] = zeroPadder:forward(trainData.data[i])
 end
-for i = 1,testData:size() do
-   testData.padded[i] = zeroPadder:forward(testData.data[i])
-end
+-- for i = 1,testData:size() do
+--    testData.padded[i] = zeroPadder:forward(testData.data[i])
+-- end
 
 trainData.data = trainData.padded
-testData.data  = testData.padded
+-- testData.data  = testData.padded
 
 trainData.padded = nil
-testData.padded = nil
+-- testData.padded = nil
 
 trainData.labels = trainData.labels:float()
-testData.labels = testData.labels:float()
+-- testData.labels = testData.labels:float()
 
 ----------------------------------------------------------------------
 print '==> saving preprocessed images table'
@@ -305,14 +312,14 @@ for i,channel in ipairs(channels) do
    trainMean = trainData.data[{ {},i }]:mean()
    trainStd = trainData.data[{ {},i }]:std()
 
-   testMean = testData.data[{ {},i }]:mean()
-   testStd = testData.data[{ {},i }]:std()
+   -- testMean = testData.data[{ {},i }]:mean()
+   -- testStd = testData.data[{ {},i }]:std()
 
    print('training data, '..channel..'-channel, mean: ' .. trainMean)
    print('training data, '..channel..'-channel, standard deviation: ' .. trainStd)
 
-   print('test data, '..channel..'-channel, mean: ' .. testMean)
-   print('test data, '..channel..'-channel, standard deviation: ' .. testStd)
+   -- print('test data, '..channel..'-channel, mean: ' .. testMean)
+   -- print('test data, '..channel..'-channel, standard deviation: ' .. testStd)
 end
 
 

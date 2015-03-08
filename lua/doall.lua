@@ -13,10 +13,10 @@ cmd:text('Options:')
 cmd:option('-visualize', true, 'visualize input data and weights during training')
 cmd:option('-save', 'results', 'subdirectory to save/log experiments in')
 cmd:option('-learningRate', 0.001, 'learning rate at t=0')
-cmd:option('-batchSize', 8, 'mini-batch size (1 = pure stochastic)')
+cmd:option('-batchSize', 1, 'mini-batch size (1 = pure stochastic)')
 cmd:option('-weightDecay', 0, 'weight decay (SGD only)')
 cmd:option('-momentum', 0, 'momentum (SGD only)')
-cmd:option('-type', 'cuda', 'type: double | float | cuda')
+cmd:option('-type', 'float', 'type: double | float | cuda')
 cmd:option('-seed', 1, 'fixed input seed for repeatable experiments')
 cmd:option('-threads', 2, 'number of threads')
 
@@ -45,8 +45,12 @@ end
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
-dofile 'data.lua'
+--dofile 'data.lua'
 --dofile 'augment.lua'
+
+trainData = torch.load('../data/trainData.lua')
+--testData = torch.load('../data/testData.lua')
+
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
 end
@@ -54,14 +58,14 @@ if opt.model == 'a1' then
     dofile 'model_a1.lua'
 end
 dofile 'loss.lua'
-dofile 'validate.lua'
+--dofile 'validate.lua'
 dofile 'train.lua'
-dofile 'test.lua'
+--dofile 'test.lua'
 
 ----------------------------------------------------------------------
 -- Train and test repeatedly
-while true do
-   train()
-   validate()
+--while true do
+   --train()
+   --validate()
    --test()
-end
+--end

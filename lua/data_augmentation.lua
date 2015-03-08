@@ -74,8 +74,6 @@ if opt.unlabeled == true then
    unlabeled_fd:readByte(unlabeled_data:storage())
 end
 
----- Put data in Lua tables
-
 -- The last 500 images reserved for validation
 trainData = {
    data = train_data[{ {1,4500},{},{},{} }],
@@ -102,12 +100,12 @@ if opt.unlabeled == true then
    }
 end
 
-if opt.subset == true then
-   trainData.data = trainData.data[{ {1,20},{},{},{} }]
-   trainData.labels = trainData.labels[{ {1,20} }]
-   -- testData.data = testData.data[{ {1,20},{},{},{} }]
-   -- testData.labels = testData.labels[{ {1,20} }]
-end
+-- if opt.subset == true then
+--    trainData.data = trainData.data[{ {1,20},{},{},{} }]
+--    trainData.labels = trainData.labels[{ {1,20} }]
+--    -- testData.data = testData.data[{ {1,20},{},{},{} }]
+--    -- testData.labels = testData.labels[{ {1,20} }]
+-- end
 -- Size variables are used in train and test functions
 -- trsize = trainData:size()
 -- tesize = testData:size()
@@ -123,11 +121,16 @@ end
 
 print('==> Augmenting data')
 
+N = 4500
+N_validation = 500
 
-N = train_data:size()[1]
 n_folds = 4 -- (n_folds - 1) copies of original and flipped data will be transformed
+
+-- Computing augmented training data tensor shape
 train_size = train_data:size()
-train_size[1] = train_size[1] * 2 * n_folds -- mutliplied by two for rotations
+train_size[1] = N * 2 * n_folds -- mutliplied by two for rotations
+
+print(train_size)
 
 trainData = {
     data = torch.FloatTensor(train_size),
@@ -135,19 +138,36 @@ trainData = {
     size = function() return trainData.data:size()[1] end
 }
 
+-- The last 500 images reserved for validation
+
+trainData.data[{ {1,4500},{},{},{} }] = train_data[{ {1,4500},{},{},{} }]
+trainData.labels[{ {1,4500} }] = train_labels[{ {1,4500} }]
+
+validationData = {
+  data = train_data[{ {4501,5000},{},{},{} }],
+  labels = train_labels[{ {4501,5000} }],
+  size = function() return validationData.data:size()[1] end
+}
+
+print(validationData:size())
+
 -- fill labels
 for i=1,n_folds*2 do
     trainData.labels[{ {N*(i-1)+1,N*i} }] = train_labels[{ {1,N} }]
 end
 
--- clone unmodified training data to trainData
-trainData.data[{ {1,N} }] = train_data:clone()
+print(trainData.labels:size())
 
+-- clone unmodified training data to trainData
+trainData.data[{ {1,N} }] = train_data[{ {1,N} }]:clone()
+
+print '==> reflections'
 -- hflips
 for i=1,N do
-    image.hflip(trainData.data[N+i], trainData.data[i])
+  trainData.data[N+i] = trainData.data[i]
+    -- image.hflip(trainData.data[N+i], trainData.data[i])
 end
-
+print '====> cloning folds'
 -- clone original and flipped
 for i=1,n_folds-1 do
     trainData.data[{ {N*2*i+1,N*2*i+N*2} }] = trainData.data[{ {1,N*2} }] 

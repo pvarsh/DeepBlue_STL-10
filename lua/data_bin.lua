@@ -10,23 +10,6 @@ require 'image'
 require 'nn'
 
 ----------------------------------------------------------------------
--- parse command line arguments
-if not opt then
-   cmd = torch.CmdLine()
-   cmd:text()
-   cmd:text('Options:')
-   cmd:option('-runlocal', false, 'indicate true if running on local machine')
-   cmd:option('-datapath', '../data/a2/stl10_binary/', 'data path for running locally')
-   cmd:option('-unlabeled', false, 'do we load unlabeled for unsupervised training')
-   cmd:option('-visualize', true, 'visualize input data and weights during training')
-   cmd:option('-yuv', true, 'convert images from RGB to YUV')
-   cmd:text()
-   opt = cmd:parse(arg or {})
-end
-
-----------------------------------------------------------------------
-print(opt)
-
 print '>> Loading dataset...'
 path = '/scratch/courses/DSGA1008/A2/binary/'
 

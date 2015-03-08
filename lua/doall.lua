@@ -45,7 +45,8 @@ end
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
-dofile 'data.lua'
+trainData = torch.load('augmented_preprocessed_training_set')
+--dofile 'data.lua'
 --dofile 'augment.lua'
 if opt.model == 'cp' then
     dofile 'model_cp.lua'
@@ -56,7 +57,7 @@ end
 dofile 'loss.lua'
 dofile 'validate.lua'
 dofile 'train.lua'
-dofile 'test.lua'
+--dofile 'test.lua'
 
 ----------------------------------------------------------------------
 -- Train and test repeatedly

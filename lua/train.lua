@@ -26,7 +26,7 @@ optimState = {
   learningRate = opt.learningRate,
   weightDecay = opt.weightDecay,
   momentum = opt.momentum,
-  learningRateDecay = 1e-7
+  learningRateDecay = 1e-4
   }
 optimMethod = optim.sgd
 

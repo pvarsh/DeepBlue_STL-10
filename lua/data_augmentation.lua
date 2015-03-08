@@ -282,6 +282,12 @@ end
 trainData.data = trainData.padded
 testData.data  = testData.padded
 
+trainData.padded = nil
+testData.padded = nil
+
+trainData.labels = trainData.labels:float()
+testData.labels = testData.labels:float()
+
 ----------------------------------------------------------------------
 print '==> saving preprocessed images table'
 

@@ -18,6 +18,8 @@ opt = {
     validateFrac = 0.1,
 }
 
+print(opt)
+
 require 'cunn'
 torch.setdefaulttensortype('torch.FloatTensor')
 
@@ -25,7 +27,7 @@ torch.setdefaulttensortype('torch.FloatTensor')
 print '>> Running...'
 
 if not paths.filep('../data/trainData.lua') then
-    dofile 'data.lua'
+    dofile 'data_bin.lua'
     trainData = torch.load('../data/trainData.lua')
 else 
     trainData = torch.load('../data/trainData.lua')

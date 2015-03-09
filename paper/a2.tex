@@ -107,21 +107,18 @@ The original 5000 training images were split into training and validation sets o
 
 \section{Training Procedure}
 \label{train}
-Both models were trained with mini batch stochastic gradient descent with batch sizes 1, 8, 32, and 128. Additionally a shorter version of model A1 (two 200-filter convolutional layers, 400-node fully connected layer) was evaluated. The full A1 architecture yielded the best performance on the validation set with mini batch size 8. It was then retrained on the full 5000-image training set and evaluated on the test set.
+Both models were trained with mini batch stochastic gradient descent with batch sizes 1, 8, 32, and 128. Additionally a shorter version of model A1 (two 200-filter convolutional layers, 400-node fully connected layer) was evaluated. Non fully stochastic mini batches improved both runtime and accuracy as suggested in \cite{lecun-98b}. The full A1 architecture yielded the best performance on the validation set with mini batch size 8.  The best-performing model was then retrained on the full 5000-image training set and evaluated on the test set. 
 \begin{center}
 	\begin{tabular}{ | l | r | r | r | }
 		\hline
 			& \multicolumn{3}{| c |}{A1 model accuracy} \\ \hline
-			& Train   & Validation 	& Test\\ \hline
-		1   & 75.76\% & 52.20\%		&  - \\ \hline
-		8   & 		  &				&	\\ \hline
-		32  & 89.81\% & 61.6\% 		&  -	\\ \hline
-		128 & 63.22\% & 54.2\%		&  -\\ \hline
+			& Train   	& Validation 	& Test		\\ \hline
+		1   & 75.76\% 	& 52.20\%		&  - 		\\ \hline
+		8   & 92.4\% 	& 61.8\%		&  62.55\%	\\ \hline
+		32  & 89.81\% 	& 61.6\% 		&  -		\\ \hline
+		128 & 63.22\% 	& 54.2\%		&  -		\\ \hline
 	\end{tabular}
 \end{center}
-
-was trained with stochastic gradient descent using minibatch sizes of 1 (fully stochastic, 8, 32, and 128). The batch size of 8 yielded the smallest validation error.
-Forward and back prop. Learning rate 0.1. Batch size 8. Rate annealing 0.001 (check), metaparameters determined with validation. Batch GD, batch to increase efficiency, while ...
 
 \section{Results}
 \label{res}

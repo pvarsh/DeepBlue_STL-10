@@ -97,7 +97,7 @@ Designed to study the use of unlabeled data for image classification, the STL-10
 
 \section{Architecture}
 \label{arc}
-Two versions of a feed-forward convolutional neural net architectures were compared. The first (CP) architecture was an implementation of the baseline model by Christian Puhrsch with one convolutional layer of 23 7x7 pixel learned filters with a step size of 2, ReLU nonlinearity, 2 sq. pixel max pooling with step size 2, 50\% dropout, a 50-node fully connected layer, ReLU, LogSoftMax and, and a negative log likelihood criterion.
+Two versions of a feed-forward convolutional neural net architectures were compared. The first (CP) architecture was an implementation of the baseline model by Christian Puhrsch with one convolutional layer of 23 7x7 pixel learned filters with a step size of 2, ReLU nonlinearity, 2 sq. pixel max pooling with step size 2, 50\% dropout, a 50-node fully connected layer, ReLU, LogSoftMax, and a negative log likelihood criterion.
 The second model (A1) used the same basic architecture but consisted of two convolutional layers of 200 and 400 5x5 pixel filters each, and a 800-neuron fully connected linear layer. Spatial pooling, rectified linear unit nonlinearities and dropout were applied as in the first network.
 
 \section{Preprocessing and augmentation}
@@ -106,7 +106,7 @@ The original 5000 training images were split into training and validation sets o
 
 \section{Training Procedure}
 \label{train}
-Both models were trained with mini batch stochastic gradient descent with batch sizes 1, 8, 32, and 128. Additionally a shorter version of model A1 (two 200-filter convolutional layers, 400-node fully connected layer) was evaluated. Non fully stochastic mini batches improved both runtime and accuracy as suggested in \cite{lecun-98b}. The full A1 architecture yielded the best performance on the validation set with mini batch size 8. The best-performing model was then retrained on the full 5000-image training set and evaluated on the test set. A learning rate of 0.1 with annealing factor 0.001 were used. All models converged in the order of 20-40 epochs in training.
+Both models were trained with mini batch stochastic gradient descent with batch sizes 1, 8, 32, and 128. Additionally a shorter version of model A1 (two 200-filter convolutional layers, 400-node fully connected layer) was evaluated. Non fully stochastic mini batches improved both runtime and accuracy as suggested in \cite{lecun-98b}. The full A1 architecture yielded the best performance on the validation set with mini batch size 8. The best-performing model was then retrained on the full 5000-image training set and evaluated on the test set. A learning rate of 0.1 with annealing factor 0.0001 were used. All models converged in the order of 20-40 epochs in training.
 \begin{center}
 	\begin{tabular}{ | l | r | r | r | }
 		\hline

@@ -106,7 +106,7 @@ The original 5000 training images were split into training and validation sets o
 
 \section{Training Procedure}
 \label{train}
-Both models were trained with mini batch stochastic gradient descent with batch sizes 1, 8, 32, and 128. Additionally a shorter version of model A1 (two 200-filter convolutional layers, 400-node fully connected layer) was evaluated. Non fully stochastic mini batches improved both runtime and accuracy as suggested in \cite{lecun-98b}. The full A1 architecture yielded the best performance on the validation set with mini batch size 8.  The best-performing model was then retrained on the full 5000-image training set and evaluated on the test set. A learning rate of 0.1 with annealing factor 0.001 were used.
+Both models were trained with mini batch stochastic gradient descent with batch sizes 1, 8, 32, and 128. Additionally a shorter version of model A1 (two 200-filter convolutional layers, 400-node fully connected layer) was evaluated. Non fully stochastic mini batches improved both runtime and accuracy as suggested in \cite{lecun-98b}. The full A1 architecture yielded the best performance on the validation set with mini batch size 8. The best-performing model was then retrained on the full 5000-image training set and evaluated on the test set. A learning rate of 0.1 with annealing factor 0.001 were used. All models converged in the order of 20-40 epochs in training.
 \begin{center}
 	\begin{tabular}{ | l | r | r | r | }
 		\hline

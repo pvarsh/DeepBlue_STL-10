@@ -30,3 +30,4 @@ wget ${url}lua/result.lua
 
 th result.lua
 
+mv results/predictions.csv predictions.csv

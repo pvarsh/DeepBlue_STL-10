@@ -8,10 +8,10 @@ print '>> Processing options...'
 
 opt = {
     learningRate = 0.1,
-    learningRateDecay = 1e-7,
+    learningRateDecay = 1e-4,
     weightDecay = 0,
     momentum = 0,
-    batchSize = 4,
+    batchSize = 8,
     model = 'a1',
     validate = false,
     validateFrac = 0.1,

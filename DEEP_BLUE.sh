@@ -6,6 +6,7 @@
 #PBS -j oe
  
 module purge
+export PATH=/scratch/courses/DSGA1008/bin:$PATH
 
 cd $HOME
 mkdir DEEP_BLUE

@@ -10,18 +10,22 @@ module purge
 cd $HOME
 mkdir DEEP_BLUE
 cd DEEP_BLUE
-mkdir results/
 
-url=http://cims.nyu.edu/~erc399/DL_DeepBlue_a2_SIFAR-10/
+url=http://cims.nyu.edu/~erc399/A2/DL_DeepBlue_a2_SIFAR-10/
+wget ${url}paper/a2.pdf
 
-wget ${url}papers/a2.pdf
+mkdir data
+mkdir lua
 
+cd lua
+mkdir results
 cd results/
-wget ${url}lua/result/model.zip
+wget ${url}lua/results/model.zip
 unzip model.zip
 cd ..
 
 wget ${url}lua/main.lua
+wget ${url}lua/data.lua
 wget ${url}lua/augment.lua
 wget ${url}lua/model_a1.lua
 wget ${url}lua/model_cp.lua
@@ -31,4 +35,4 @@ wget ${url}lua/result.lua
 
 th result.lua
 
-mv results/predictions.csv predictions.csv
+mv results/predictions.csv ../predictions.csv

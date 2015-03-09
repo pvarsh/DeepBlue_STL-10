@@ -96,7 +96,7 @@ for t = 1,testData:size() do
     p = idx[pred:eq(m)]
 
     -- add to predictions
-    file:write("\n",t,",",p[1])
+    file:write("\n",t," , ",p[1])
 end
 
 -- print confusion matrix

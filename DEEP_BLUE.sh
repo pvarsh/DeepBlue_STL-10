@@ -17,7 +17,8 @@ url=http://cims.nyu.edu/~erc399/DL_DeepBlue_a2_SIFAR-10/
 wget ${url}papers/a2.pdf
 
 cd results/
-wget ${url}lua/result/model.net
+wget ${url}lua/result/model.zip
+unzip model.zip
 cd ..
 
 wget ${url}lua/main.lua

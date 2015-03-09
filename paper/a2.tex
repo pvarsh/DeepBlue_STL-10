@@ -144,6 +144,22 @@ The following table presents the results of both models in training on validatio
   \end{tabular}
 \end{center}
 
+\section{A note on augmentation}
+
+The table shows A1 model results trained on several augmentations of the 5000-image training set. Because these evaluations were attempted close to the submission deadline, they were not done with the validation split. The entire training set was augmented, and accuracy was assessed on the test set. These results suggest that augmenting the training set can reduce the number of epochs needed for training convergence and improve classification accuracy.
+
+\begin{center}
+	\begin{tabular}{ | p{3cm} | r | r | r | r | }
+	\hline
+	Augmentations & Augmented size & Training accuracy & Test Accuracy & Number of Epochs \\ \hline
+	Original + horizontal reflection & 10,000 & 99.68\% & 63.45\% & 37 \\ \hline
+	Original + horizontal reflection + rotations ($20^\circ$ and $40^\circ$) & 15,000 & 99.23\% & 67.48\% & 31 \\ \hline
+	Original + horizontal reflection 
+	+ rotation + rotation and reflection & 20,000 & 99.43\% & 67.75\% & 29 \\ \hline 
+	
+	\end{tabular}
+\end{center}
+
 
 \bibliography{citations}{}
 \bibliographystyle{plain}

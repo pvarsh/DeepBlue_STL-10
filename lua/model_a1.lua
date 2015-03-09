@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------
 -- Team Deep Blue
--- 3/2/2015
+-- 3/8/2015
 -- 
 -- Implementation of A1 model architecture
 ----------------------------------------------------------------------
@@ -10,7 +10,7 @@ require 'optim'
 require 'xlua'
 
 ----------------------------------------------------------------------
-print '==> define parameters'
+print '>> Defining model...'
 
 -- 10-class problem
 noutputs = 10
@@ -25,7 +25,7 @@ ninputs = nfeats*width*height
 nhiddens = ninputs / 2
 
 -- hidden units, filter sizes:
-nstates = {200,400,800}
+nstates = {200,200,400}
 filtsize = 5
 poolsize = 2
 stepsize = 2
@@ -49,4 +49,7 @@ model:add(nn.Dropout(0.5))
 model:add(nn.Linear(nstates[2]*filtsize*filtsize, nstates[3]))
 model:add(nn.ReLU())
 model:add(nn.Linear(nstates[3], noutputs))
+
+model:add(nn.LogSoftMax())
+criterion = nn.ClassNLLCriterion()
 

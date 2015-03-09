@@ -25,7 +25,7 @@ ninputs = nfeats*width*height
 nhiddens = ninputs / 2
 
 -- hidden units, filter sizes:
-nstates = {200,200,400}
+nstates = {200,400,800}
 filtsize = 5
 poolsize = 2
 stepsize = 2

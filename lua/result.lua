@@ -71,7 +71,7 @@ confusion = optim.ConfusionMatrix(classes)
 
 -- Open file for saving predictions
 file = io.open("results/predictions.csv","w")
-file:write("Id,Prediction")
+file:write("Id,Category")
 
 print('>> Testing...')
 -- test over test data

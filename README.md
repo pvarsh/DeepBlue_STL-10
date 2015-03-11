@@ -3,9 +3,9 @@
 Submission of homework assignment 2 from NYU's Deep Learning class (Professor Yann LeCun). We use two feed forward architectures to achieve 67% accuracy on [STL-10](http://cs.stanford.edu/~acoates/stl10/) dataset.
 
 ### Team
-Emil Christensen [emilrex](https://github.com/EmilRex)
-Peter Varshavsky [pvarsh](https://github.com/pvarsh)
-Priyank Bhatia [pb1672](https://github.com/pb1672)
+- Emil Christensen [emilrex](https://github.com/EmilRex)
+- Peter Varshavsky [pvarsh](https://github.com/pvarsh)
+- Priyank Bhatia [pb1672](https://github.com/pb1672)
 
 ### Files and folders
 ###### lua
